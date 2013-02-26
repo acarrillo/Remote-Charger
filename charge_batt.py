@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python -u
 
 from socket import socket
 import xml.etree.ElementTree as ET
