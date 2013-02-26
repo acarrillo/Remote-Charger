@@ -17,7 +17,10 @@ s.send("Content-Length: %d\r\n\r\n" % len(xmlmessage))
 s.send(xmlmessage)
 data=""
 for line in s.makefile():
+    #print line
     data += line
     s.close()
-print data
-#tree=ET.parse(
+xmldat = data.split("\n")
+print xmldat[7]
+#tree=ET.fromstring(xmldat[len(xmldat)-1])
+#print tree
