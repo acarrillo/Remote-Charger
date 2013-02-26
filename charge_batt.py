@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 
-import urllib, urllib2
+from socket import socket
 
-url = "http://128.36.14.59/lxi/infomation.xml"
+host = '128.36.14.59'
+port = 80
+path = "/lxi/infomation.xml"
+xmlmessage = "0"
 
-data=urllib.urlencode({'data':'0'})
-req=urllib2.Request(url,data)
-response=urllib2.urlopen(req)
-print response.geturl()
-print response.info()
-page=response.read()
-print page
+s = socket()
+s.connect((host, port))
+s.send("POST %s HTTP/1.1\r\n" % path)
+s.send("Host: %s\r\n" % host)
+s.send("Content-Type: text/xml\r\n")
+s.send("Content-Length: %d\r\n\r\n" % len(xmlmessage))
+s.send(xmlmessage)
+for line in s.makefile():
+        print line,
+        s.close()
