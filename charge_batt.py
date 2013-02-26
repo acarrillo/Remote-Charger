@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from socket import socket
+import xml.etree.ElementTree as ET
 
 host = '128.36.14.59'
 port = 80
@@ -14,6 +15,9 @@ s.send("Host: %s\r\n" % host)
 s.send("Content-Type: text/xml\r\n")
 s.send("Content-Length: %d\r\n\r\n" % len(xmlmessage))
 s.send(xmlmessage)
+data=""
 for line in s.makefile():
-        print line,
-        s.close()
+    data += line
+    s.close()
+print data
+#tree=ET.parse(
