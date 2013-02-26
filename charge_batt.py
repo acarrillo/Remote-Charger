@@ -28,17 +28,31 @@ def connectServ(message):
     xmldat = result[7]
     return xmldat
 
+#Initialize power supply
+connectServ('4097') # Press 'P25V' to select the P25V channel
+connectServ('16449') # Press '4'
+connectServ('16545') # Press '.'
+connectServ('16417') # Press '2'
+connectServ('12289') # Press 'V'
 
-while 1:
+connectServ('16545') # Press '.'
+connectServ('16465') # Press '5'
+connectServ('12321') # Press 'A'
+
+connectServ('8241') # Press 'ON' for P25V
+
+# Do feedback loop
+while last_voltage < 4.2:
     xmldat = connectServ('0')
     #print xmldat,"\n"
     try:
         root=ET.fromstring(xmldat)
         last_voltage = float(root[11].text)
         last_set = float(root[14].text)
-    except ExpatError:
-        pass
+    except:
+        pass # TODO: Debug why it occasionally fails
     print "Read voltage\t\t",last_voltage
     print "Setpoint voltage\t",last_set
 
     time.sleep(1)
+connectServ('8241') # Press 'ON' for P25V
