@@ -7,7 +7,7 @@ import sys
 
 host = '128.36.14.59'
 port = 80
-path = "/lxi/infomation.xml"
+path = "/lxi/infomation.xml" # NOTE THE MISSPELLING! This got me the first time around...but I later realized that the manufacturer misspelled the word "information."
 
 last_voltage = '0.00'
 last_set = 0
