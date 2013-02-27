@@ -4,6 +4,7 @@ from socket import socket
 import xml.etree.ElementTree as ET
 import time
 import sys
+import signal
 
 host = '128.36.14.59'
 port = 80
@@ -75,18 +76,20 @@ connectServ('8241') # Press 'ON' for P25V
 sys.stdout.write('.\n')
 
 # Do feedback loop
-sys.stdout.write("Voltage [                                                  ]00.00v")
+sys.stdout.write("Voltage [                                                  ]00.00v") #Initialize progress bar
 while float(last_voltage) < 4.2:
-    xmldat = connectServ('0')
     try:
-        root=ET.fromstring(xmldat)
-        last_voltage = root[11].text
-    except:
-        pass # TODO: Debug why it occasionally fails
-    updateProgressBar(last_voltage)
-    #print "Read voltage\t\t",last_voltage
-
-    time.sleep(1)
+        xmldat = connectServ('0')
+        try:
+            root=ET.fromstring(xmldat)
+            last_voltage = root[11].text
+        except:
+            pass # TODO: Debug why it occasionally fails
+        updateProgressBar(last_voltage)
+        time.sleep(1)
+    except KeyboardInterrupt:
+        print "\nQuitting gracefully"
+        break
 connectServ('8241') # Press 'OFF' for P25V
 sys.stdout.write("\n")
 print "Done! Killed the power supply."
