@@ -6,9 +6,10 @@ import time
 import sys
 import signal
 
-host = '128.36.14.174'
+host_prefix = '128.36.14.'
 port = 80
 path = "/lxi/infomation.xml" # NOTE THE MISSPELLING! This got me the first time around...but I later realized that the manufacturer misspelled the word "information."
+host = host_prefix + (sys.argv[1] if len(sys.argv) > 1 else '174')
 
 last_voltage = '0.00'
 last_set = 0
