@@ -6,7 +6,7 @@ import time
 import sys
 import signal
 
-host = '128.36.14.59'
+host = '128.36.14.174'
 port = 80
 path = "/lxi/infomation.xml" # NOTE THE MISSPELLING! This got me the first time around...but I later realized that the manufacturer misspelled the word "information."
 
@@ -84,6 +84,7 @@ while float(last_voltage) < 4.2:
             root=ET.fromstring(xmldat)
             last_voltage = root[11].text
         except:
+            sys.stdout.write("\007")
             pass # TODO: Debug why it occasionally fails
         updateProgressBar(last_voltage)
         time.sleep(1)
