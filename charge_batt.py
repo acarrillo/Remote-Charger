@@ -17,6 +17,8 @@ progBarTicks = 0
 ticksToDraw = 0
 progBarLen = 50
 
+progbar_postfix = ']00.00v    (00.00A)'
+
 # State booleans
 atVoltageSetpoint = 0
 atCurrMin = 0
@@ -41,7 +43,9 @@ def connectServ(message):
 def updateProgressBar(lv,lc):
     global progBarLen
     global progBarTicks
-    for x in range(0,progBarLen+1+6+4+6+1+1): # Add 1 for end bracket, add 6 for voltage, add 4 for spacing, add 6 for current, add 1 for end paren.
+
+    #TODO: Do the below operations pythonically, by doing `spaces='\b'*19` instead of using for loops
+    for x in range(0,progBarLen+len(progbar_postfix): # Back cursor up to the beginning of the progress bar graphic.
         sys.stdout.write('\b') # Flush.
     fracDone = float(lv)/4.2
     ticksToDraw = int(progBarLen*fracDone)
@@ -84,9 +88,10 @@ sys.stdout.write('.')
 
 connectServ('8241') # Press 'ON' for P25V
 sys.stdout.write('.\n')
+sys.stdout.write("CTRL-C to quit.\n")
 
 # Do feedback loop to reach voltage setpoint
-sys.stdout.write("Voltage [                                                  ]00.00v    (00.00A)") #Initialize progress bar
+sys.stdout.write("Voltage [                                                  " + progbar_postfix) #Initialize progress bar
 while not atVoltageSetpoint or not atCurrMin:
     try:
         xmldat = connectServ('0')
