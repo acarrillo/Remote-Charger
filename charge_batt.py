@@ -101,7 +101,7 @@ while not atVoltageSetpoint or not atCurrMin:
             last_current = root[12].text
 
             atVoltageSetpoint = float(last_voltage) >= 4.2 # Voltage setpoint is 4.2v
-            atCurrMin = float(last_current) <= 0.035 # Current dropoff should not dip below 7% of current limit, or 35mA
+            atCurrMin = float(last_current) <= 0.1 # Current dropoff should not dip below this point. Arbitrarily chosen; technically this could be as low as .035A
         except:
             sys.stdout.write("\007")
             pass # TODO: Debug why it occasionally fails
