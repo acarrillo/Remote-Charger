@@ -45,7 +45,7 @@ def updateProgressBar(lv,lc):
     global progBarTicks
 
     #TODO: Do the below operations pythonically, by doing `spaces='\b'*19` instead of using for loops
-    for x in range(0,progBarLen+len(progbar_postfix): # Back cursor up to the beginning of the progress bar graphic.
+    for x in range(0,progBarLen+len(progbar_postfix)): # Back cursor up to the beginning of the progress bar graphic.
         sys.stdout.write('\b') # Flush.
     fracDone = float(lv)/4.2
     ticksToDraw = int(progBarLen*fracDone)
@@ -106,7 +106,7 @@ while not atVoltageSetpoint or not atCurrMin:
             sys.stdout.write("\007")
             pass # TODO: Debug why it occasionally fails
         updateProgressBar(last_voltage,last_current)
-        time.sleep(1)
+        time.sleep(3)
     except KeyboardInterrupt:
         print "\nQuitting gracefully"
         break
